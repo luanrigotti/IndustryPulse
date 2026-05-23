@@ -1,0 +1,6 @@
+@IndustryPulse.API_HostAddress = http://localhost:5222
+
+GET {{IndustryPulse.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
