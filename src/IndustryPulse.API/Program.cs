@@ -94,6 +94,8 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
 var app = builder.Build();
 
 app.UseMiddleware<IndustryPulse.API.Middlewares.ErrorHandlingMiddleware>();
@@ -104,5 +106,13 @@ app.UseCors("AllowReact");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+
+// Aplica migrations e seed automaticamente
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    await context.Database.MigrateAsync();
+    await IndustryPulse.Infrastructure.Data.Seed.DataSeeder.SeedAsync(context);
+}
 
 app.Run();

@@ -34,9 +34,9 @@ public class ErrorHandlingMiddleware
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Erro inesperado");
+            _logger.LogError(ex, "Erro inesperado: {Message}", ex.Message);
             await HandleExceptionAsync(
-                context, ex, HttpStatusCode.InternalServerError);
+            context, ex, HttpStatusCode.InternalServerError);
         }
     }
 

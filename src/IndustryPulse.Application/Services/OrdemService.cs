@@ -32,15 +32,15 @@ public class OrdemService : IOrdemService
         var total = await _ordemRepository.ContarPorAnoAsync(ano);
 
         var ordem = new OrdemProducao
-        {
-            Numero = $"OP-{ano}-{(total + 1):D4}",
-            ProdutoId = dto.ProdutoId,
-            LinhaProducaoId = dto.LinhaProducaoId,
-            QuantidadePlanejada = dto.QuantidadePlanejada,
-            DataPrevisao = dto.DataPrevisao,
-            Observacao = dto.Observacao,
-            DataAbertura = DateTime.UtcNow
-        };
+    {
+        Numero = $"OP-{ano}-{(total + 1):D4}",
+        ProdutoId = dto.ProdutoId,
+        LinhaProducaoId = dto.LinhaProducaoId,
+        QuantidadePlanejada = dto.QuantidadePlanejada,
+        DataPrevisao = DateTime.SpecifyKind(dto.DataPrevisao, DateTimeKind.Utc),
+        Observacao = dto.Observacao,
+        DataAbertura = DateTime.UtcNow
+    };
 
         await _ordemRepository.CriarAsync(ordem);
         return ToDTO(ordem);
