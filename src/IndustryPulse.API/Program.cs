@@ -27,6 +27,7 @@ builder.Services.AddScoped<IOrdemService, OrdemService>();
 builder.Services.AddScoped<IProdutoService, ProdutoService>();
 builder.Services.AddScoped<ILinhaService, LinhaService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IDashboardService, DashboardService>();
 
 // JWT
 var jwtKey = builder.Configuration["Jwt:Key"]!;
