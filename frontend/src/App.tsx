@@ -5,7 +5,8 @@ import Layout from './components/layout/Layout'
 import LoginPage from './pages/auth/LoginPage'
 import DashboardPage from './pages/dashboard/DashboardPage'
 import OrdensPage from './pages/ordens/OrdensPage'
-
+import ProdutosPage from './pages/produtos/ProdutosPage'
+import LinhasPage from './pages/linhas/LinhasPage'
 
 export default function App() {
   return (
@@ -15,49 +16,29 @@ export default function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/" element={<Navigate to="/dashboard" />} />
 
-          <Route
-            path="/dashboard"
-            element={
-              <ProtectedRoute>
-                <Layout>
-                  <DashboardPage />
-                </Layout>
-              </ProtectedRoute>
-            }
-          />
+          <Route path="/dashboard" element={
+            <ProtectedRoute>
+              <Layout><DashboardPage /></Layout>
+            </ProtectedRoute>
+          } />
 
-          <Route
-            path="/ordens"
-            element={
-              <ProtectedRoute>
-                <Layout>
-                  <OrdensPage />
-                </Layout>
-              </ProtectedRoute>
-            }
-          />
+          <Route path="/ordens" element={
+            <ProtectedRoute>
+              <Layout><OrdensPage /></Layout>
+            </ProtectedRoute>
+          } />
 
-          <Route
-            path="/produtos"
-            element={
-              <ProtectedRoute>
-                <Layout>
-                  <div className="text-white">Produtos em construção...</div>
-                </Layout>
-              </ProtectedRoute>
-            }
-          />
+          <Route path="/produtos" element={
+            <ProtectedRoute>
+              <Layout><ProdutosPage /></Layout>
+            </ProtectedRoute>
+          } />
 
-          <Route
-            path="/linhas"
-            element={
-              <ProtectedRoute>
-                <Layout>
-                  <div className="text-white">Linhas em construção...</div>
-                </Layout>
-              </ProtectedRoute>
-            }
-          />
+          <Route path="/linhas" element={
+            <ProtectedRoute>
+              <Layout><LinhasPage /></Layout>
+            </ProtectedRoute>
+          } />
         </Routes>
       </AuthProvider>
     </BrowserRouter>
