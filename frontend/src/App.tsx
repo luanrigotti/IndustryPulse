@@ -4,6 +4,7 @@ import ProtectedRoute from './components/layout/ProtectedRoute'
 import Layout from './components/layout/Layout'
 import LoginPage from './pages/auth/LoginPage'
 import DashboardPage from './pages/dashboard/DashboardPage'
+import OrdensPage from './pages/ordens/OrdensPage'
 
 
 export default function App() {
@@ -30,7 +31,7 @@ export default function App() {
             element={
               <ProtectedRoute>
                 <Layout>
-                  <div className="text-white">Ordens em construção...</div>
+                  <OrdensPage />
                 </Layout>
               </ProtectedRoute>
             }
