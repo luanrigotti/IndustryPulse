@@ -3,6 +3,8 @@ import { AuthProvider } from './contexts/AuthContext'
 import ProtectedRoute from './components/layout/ProtectedRoute'
 import Layout from './components/layout/Layout'
 import LoginPage from './pages/auth/LoginPage'
+import DashboardPage from './pages/dashboard/DashboardPage'
+
 
 export default function App() {
   return (
@@ -17,7 +19,7 @@ export default function App() {
             element={
               <ProtectedRoute>
                 <Layout>
-                  <div className="text-white">Dashboard em construção...</div>
+                  <DashboardPage />
                 </Layout>
               </ProtectedRoute>
             }
