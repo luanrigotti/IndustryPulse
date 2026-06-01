@@ -35,4 +35,11 @@ public class OrdemRepository : BaseRepository<OrdemProducao>, IOrdemRepository
     public async Task<int> ContarPorAnoAsync(int ano)
         => await _context.OrdensProducao
             .CountAsync(o => o.DataAbertura.Year == ano);
+
+    public override async Task<IEnumerable<OrdemProducao>> BuscarTodosAsync()
+        => await _context.OrdensProducao
+            .Include(o => o.Produto)
+            .Include(o => o.LinhaProducao)
+            .Include(o => o.Paradas)
+            .ToListAsync();
 }

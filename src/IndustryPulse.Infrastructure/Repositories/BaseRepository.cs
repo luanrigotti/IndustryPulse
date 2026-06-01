@@ -15,7 +15,7 @@ public class BaseRepository<T> : IBaseRepository<T> where T : class
         _dbSet = context.Set<T>();
     }
 
-    public async Task<IEnumerable<T>> BuscarTodosAsync()
+    public virtual async Task<IEnumerable<T>> BuscarTodosAsync()
         => await _dbSet.ToListAsync();
 
     public async Task<T?> BuscarPorIdAsync(int id)
