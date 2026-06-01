@@ -16,7 +16,7 @@ public class LinhaService : ILinhaService
 
     public async Task<IEnumerable<LinhaResponseDTO>> BuscarTodasAsync()
     {
-        var linhas = await _repository.BuscarAtivasAsync();
+        var linhas = await _repository.BuscarTodosAsync();
         return linhas.Select(ToDTO);
     }
 
