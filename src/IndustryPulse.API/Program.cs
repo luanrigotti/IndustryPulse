@@ -1,5 +1,8 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using IndustryPulse.Application.Services;
 using IndustryPulse.Application.Services.Interfaces;
+using IndustryPulse.Application.Validators;
 using IndustryPulse.Domain.Interfaces.Repositories;
 using IndustryPulse.Infrastructure.Data;
 using IndustryPulse.Infrastructure.Repositories;
@@ -63,6 +66,10 @@ builder.Services.AddControllers()
         options.JsonSerializerOptions.Converters.Add(
             new System.Text.Json.Serialization.JsonStringEnumConverter());
     });
+
+// Validation
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddValidatorsFromAssemblyContaining<CriarOrdemValidator>();
 
 // Swagger
 builder.Services.AddEndpointsApiExplorer();
