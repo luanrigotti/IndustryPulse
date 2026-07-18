@@ -11,23 +11,26 @@ import {
   buscarParetoParadas
 } from '../../api/dashboard'
 import type { KpiGeral, ProducaoDiaria, EficienciaLinha, ParetoParada } from '../../types'
+import { Calendar, CalendarClock, ChartColumn, Clock, Cog, Triangle, TriangleAlert, type LucideIcon } from 'lucide-react'
 
 const CORES = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6']
 
 interface CardKpiProps {
   titulo: string
   valor: string
-  icone: string
+  icone: LucideIcon
   cor: string
   subtitulo?: string
 }
 
 function CardKpi({ titulo, valor, icone, cor, subtitulo }: CardKpiProps) {
+  const Icone = icone;
+
   return (
     <div className="bg-gray-800 rounded-lg p-6">
       <div className="flex items-center justify-between mb-2">
         <span className="text-gray-400 text-sm">{titulo}</span>
-        <span className="text-2xl">{icone}</span>
+        <Icone className={`w-6 h-6 ${cor}`} />
       </div>
       <p className={`text-3xl font-bold ${cor}`}>{valor}</p>
       {subtitulo && <p className="text-gray-500 text-xs mt-1">{subtitulo}</p>}
@@ -94,14 +97,14 @@ export default function DashboardPage() {
         <CardKpi
           titulo="OEE"
           valor={`${kpis?.oeePercentual ?? 0}%`}
-          icone="⚙️"
+          icone={Cog}
           cor="text-blue-400"
           subtitulo="Meta: 85%"
         />
         <CardKpi
           titulo="Cumprimento de Prazo"
           valor={`${kpis?.taxaCumprimentoPrazo ?? 0}%`}
-          icone="📅"
+          icone={CalendarClock}
           cor={
             (kpis?.taxaCumprimentoPrazo ?? 0) >= 90
               ? 'text-green-400'
@@ -112,14 +115,14 @@ export default function DashboardPage() {
         <CardKpi
           titulo="Eficiência"
           valor={`${kpis?.eficienciaProducao ?? 0}%`}
-          icone="📈"
+          icone={ChartColumn}
           cor="text-yellow-400"
           subtitulo="Produzido vs Planejado"
         />
         <CardKpi
           titulo="Ordens Atrasadas"
           valor={`${kpis?.totalOrdensAtrasadas ?? 0}`}
-          icone="⚠️"
+          icone={TriangleAlert}
           cor={
             (kpis?.totalOrdensAtrasadas ?? 0) === 0
               ? 'text-green-400'
