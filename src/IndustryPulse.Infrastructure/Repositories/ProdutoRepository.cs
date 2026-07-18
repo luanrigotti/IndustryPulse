@@ -17,4 +17,7 @@ public class ProdutoRepository : BaseRepository<Produto>, IProdutoRepository
         => await _context.Produtos
             .Where(p => p.Ativo)
             .ToListAsync();
+
+    public async Task<int> ContarAsync()
+       => await _context.Produtos.CountAsync();
 }

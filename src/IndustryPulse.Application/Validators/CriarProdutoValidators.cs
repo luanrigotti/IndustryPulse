@@ -8,10 +8,6 @@ public class CriarProdutoValidators : AbstractValidator<CriarProdutoDTO>
 {
     public CriarProdutoValidators()
     {
-        RuleFor(x => x.Codigo)
-            .NotEmpty().WithMessage("O código do produto é obrigatório.")
-            .MaximumLength(50).WithMessage("O código deve ter no máximo 50 caracteres.");
-
         RuleFor(x => x.Descricao)
             .NotEmpty().WithMessage("A descrição do produto é obrigatória.")
             .MaximumLength(200).WithMessage("A descrição deve ter no máximo 200 caracteres.");

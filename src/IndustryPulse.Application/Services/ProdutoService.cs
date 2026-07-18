@@ -28,14 +28,11 @@ public class ProdutoService : IProdutoService
 
     public async Task<ProdutoResponseDTO> CriarAsync(CriarProdutoDTO dto)
     {
-        var existente = await _repository.BuscarPorCodigoAsync(dto.Codigo);
-        if (existente != null)
-            throw new InvalidOperationException(
-                $"Já existe um produto com o código {dto.Codigo}");
+        var total = await _repository.ContarAsync();
 
         var produto = new Produto
         {
-            Codigo = dto.Codigo,
+            Codigo = $"PROD-{(total + 1):D3}",
             Descricao = dto.Descricao,
             UnidadeMedida = dto.UnidadeMedida,
             TempoProducaoMinutos = dto.TempoProducaoMinutos
