@@ -8,10 +8,12 @@ namespace IndustryPulse.Application.Services;
 public class OrdemService : IOrdemService
 {
     private readonly IOrdemRepository _ordemRepository;
+    private readonly ILinhaRepository _linhaRepository;
 
-    public OrdemService(IOrdemRepository ordemRepository)
+    public OrdemService(IOrdemRepository ordemRepository, ILinhaRepository linhaRepository)
     {
         _ordemRepository = ordemRepository;
+        _linhaRepository = linhaRepository;
     }
 
     public async Task<IEnumerable<OrdemResponseDTO>> BuscarTodasAsync()
@@ -31,11 +33,17 @@ public class OrdemService : IOrdemService
         var ano = DateTime.Now.Year;
         var total = await _ordemRepository.ContarPorAnoAsync(ano);
 
+        var linha = await _linhaRepository.BuscarPorIdAsync(dto.LinhaProducaoId)
+            ?? throw new InvalidOperationException("Linha de produção não encontrada");
+
+        if (!linha.Ativa)
+            throw new InvalidOperationException("Não é possível criar uma ordem em uma linha inativa");
+
         var ordem = new OrdemProducao
     {
         Numero = $"OP-{ano}-{(total + 1):D4}",
         ProdutoId = dto.ProdutoId,
-        LinhaProducaoId = dto.LinhaProducaoId,
+        LinhaProducaoId = linha.Id,
         QuantidadePlanejada = dto.QuantidadePlanejada,
         DataPrevisao = DateTime.SpecifyKind(dto.DataPrevisao, DateTimeKind.Utc),
         Observacao = dto.Observacao,
