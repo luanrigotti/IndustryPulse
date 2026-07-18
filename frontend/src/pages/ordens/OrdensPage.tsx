@@ -12,16 +12,24 @@ const statusCor: Record<string, string> = {
   Cancelada: 'bg-red-900 text-red-300',
 }
 
+interface FormOrdem {
+  produtoId: number
+  linhaProducaoId: number
+  quantidadePlanejada: number | ''
+  dataPrevisao: string
+  observacao: string
+}
+
 export default function OrdensPage() {
   const [ordens, setOrdens] = useState<Ordem[]>([])
   const [produtos, setProdutos] = useState<Produto[]>([])
   const [linhas, setLinhas] = useState<Linha[]>([])
   const [carregando, setCarregando] = useState(true)
   const [modalAberto, setModalAberto] = useState(false)
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<FormOrdem>({
     produtoId: 0,
     linhaProducaoId: 0,
-    quantidadePlanejada: 0,
+    quantidadePlanejada: '',
     dataPrevisao: '',
     observacao: ''
   })
@@ -47,13 +55,14 @@ export default function OrdensPage() {
     e.preventDefault()
     await criarOrdem({
       ...form,
-      dataPrevisao: new Date(form.dataPrevisao).toISOString()
+      dataPrevisao: new Date(form.dataPrevisao).toISOString(),
+      quantidadePlanejada: form.quantidadePlanejada === '' ? 0 : form.quantidadePlanejada
     })
     setModalAberto(false)
     setForm({
       produtoId: 0,
       linhaProducaoId: 0,
-      quantidadePlanejada: 0,
+      quantidadePlanejada: '',
       dataPrevisao: '',
       observacao: ''
     })
@@ -225,7 +234,11 @@ export default function OrdensPage() {
                 <input
                   type="number"
                   value={form.quantidadePlanejada}
-                  onChange={(e) => setForm({ ...form, quantidadePlanejada: Number(e.target.value) })}
+                  onChange={(e) => {
+                    const val = e.target.value
+                    setForm({ ...form, quantidadePlanejada: val === '' ? '' : Number(val) })
+                  }}
+                  onFocus={(e) => e.target.select()}
                   className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded text-white"
                   min={1}
                   required
