@@ -4,7 +4,6 @@ import type { Produto } from '../../types'
 import api from '../../api/axios'
 
 interface FormProduto {
-  codigo: string
   descricao: string
   unidadeMedida: string
   tempoProducaoMinutos: number | ''
@@ -14,7 +13,6 @@ export default function ProdutosPage() {
   const [carregando, setCarregando] = useState(true)
   const [modalAberto, setModalAberto] = useState(false)
   const [form, setForm] = useState<FormProduto>({
-    codigo: '',
     descricao: '',
     unidadeMedida: '',
     tempoProducaoMinutos: ''
@@ -35,7 +33,7 @@ export default function ProdutosPage() {
     e.preventDefault()
     await api.post('/produtos', form)
     setModalAberto(false)
-    setForm({ codigo: '', descricao: '', unidadeMedida: '', tempoProducaoMinutos: 0 })
+    setForm({ descricao: '', unidadeMedida: '', tempoProducaoMinutos: 0 })
     await carregar()
   }
 
@@ -129,16 +127,6 @@ export default function ProdutosPage() {
           <div className="bg-gray-800 rounded-lg p-6 w-full max-w-md">
             <h3 className="text-white font-bold text-lg mb-4">Novo Produto</h3>
             <form onSubmit={handleCriar} className="space-y-4">
-              <div>
-                <label className="block text-gray-400 text-sm mb-1">Código</label>
-                <input
-                  type="text"
-                  value={form.codigo}
-                  onChange={(e) => setForm({ ...form, codigo: e.target.value })}
-                  className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded text-white"
-                  required
-                />
-              </div>
               <div>
                 <label className="block text-gray-400 text-sm mb-1">Descrição</label>
                 <input
