@@ -53,6 +53,7 @@ export default function OrdensPage() {
 
   const handleCriar = async (e: React.FormEvent) => {
     e.preventDefault()
+    try{
     await criarOrdem({
       ...form,
       dataPrevisao: new Date(form.dataPrevisao).toISOString(),
@@ -67,6 +68,9 @@ export default function OrdensPage() {
       observacao: ''
     })
     await carregar()
+    }catch (error) {
+    alert(error instanceof Error ? error.message : 'Erro ao criar ordem')
+    }
   }
 
   const handleAtualizarStatus = async (id: number, novoStatus: string) => {
@@ -223,7 +227,9 @@ export default function OrdensPage() {
                   required
                 >
                   <option value={0}>Selecione...</option>
-                  {linhas.map((l) => (
+                  {linhas
+                    .filter((l) => l.ativa)
+                    .map ((l) => (
                     <option key={l.id} value={l.id}>{l.nome}</option>
                   ))}
                 </select>
