@@ -3,14 +3,20 @@ import { buscarLinhas } from '../../api/linhas'
 import type { Linha } from '../../types'
 import api from '../../api/axios'
 
+interface FormLinha {
+  nome: string
+  descricao: string
+  capacidadeHora: number | ''
+}
+
 export default function LinhasPage() {
   const [linhas, setLinhas] = useState<Linha[]>([])
   const [carregando, setCarregando] = useState(true)
   const [modalAberto, setModalAberto] = useState(false)
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<FormLinha>({
     nome: '',
     descricao: '',
-    capacidadeHora: 0
+    capacidadeHora: ''
   })
 
   const carregar = async () => {
@@ -28,7 +34,7 @@ export default function LinhasPage() {
     e.preventDefault()
     await api.post('/linhas', form)
     setModalAberto(false)
-    setForm({ nome: '', descricao: '', capacidadeHora: 0 })
+    setForm({ nome: '', descricao: '', capacidadeHora: '' })
     await carregar()
   }
 
@@ -144,7 +150,11 @@ export default function LinhasPage() {
                 <input
                   type="number"
                   value={form.capacidadeHora}
-                  onChange={(e) => setForm({ ...form, capacidadeHora: Number(e.target.value) })}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    setForm({ ... form, capacidadeHora: val === '' ? '' : Number(val) })
+                  }}
+                  onFocus={(e) => e.target.select()}
                   className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded text-white"
                   min={1}
                   required
