@@ -3,15 +3,21 @@ import { buscarProdutos } from '../../api/produtos'
 import type { Produto } from '../../types'
 import api from '../../api/axios'
 
+interface FormProduto {
+  codigo: string
+  descricao: string
+  unidadeMedida: string
+  tempoProducaoMinutos: number | ''
+}
 export default function ProdutosPage() {
   const [produtos, setProdutos] = useState<Produto[]>([])
   const [carregando, setCarregando] = useState(true)
   const [modalAberto, setModalAberto] = useState(false)
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<FormProduto>({
     codigo: '',
     descricao: '',
     unidadeMedida: '',
-    tempoProducaoMinutos: 0
+    tempoProducaoMinutos: ''
   })
 
   const carregar = async () => {
@@ -159,7 +165,11 @@ export default function ProdutosPage() {
                 <input
                   type="number"
                   value={form.tempoProducaoMinutos}
-                  onChange={(e) => setForm({ ...form, tempoProducaoMinutos: Number(e.target.value) })}
+                  onChange={(e) => {
+                    const val = e.target.value
+                    setForm({ ...form, tempoProducaoMinutos: val === '' ? '' : Number(val) })
+                  }}
+                  onFocus={(e) => e.target.select()}
                   className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded text-white"
                   min={1}
                   required
