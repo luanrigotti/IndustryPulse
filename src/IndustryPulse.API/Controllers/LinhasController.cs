@@ -41,4 +41,11 @@ public class LinhasController : ControllerBase
         await _service.DesativarAsync(id);
         return NoContent();
     }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Ativar(int id)
+    {
+        await _service.AtivarAsync(id);
+        return NoContent();
+    }
 }

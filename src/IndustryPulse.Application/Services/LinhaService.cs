@@ -49,6 +49,16 @@ public class LinhaService : ILinhaService
         await _repository.AtualizarAsync(linha);
     }
 
+    public async Task AtivarAsync(int id)
+    {
+        var linha = await _repository.BuscarPorIdAsync(id)
+            ?? throw new KeyNotFoundException($"Linha {id} não encontrada");
+
+        linha.Ativa = true;
+        linha.AtualizadoEm = DateTime.UtcNow;
+        await _repository.AtualizarAsync(linha);
+    }
+
     private static LinhaResponseDTO ToDTO(LinhaProducao l) => new(
         l.Id,
         l.Nome,

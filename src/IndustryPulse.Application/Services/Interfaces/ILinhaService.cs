@@ -8,4 +8,5 @@ public interface ILinhaService
     Task<LinhaResponseDTO?> BuscarPorIdAsync(int id);
     Task<LinhaResponseDTO> CriarAsync(CriarLinhaDTO dto);
     Task DesativarAsync(int id);
+    Task AtivarAsync(int id);
 }
