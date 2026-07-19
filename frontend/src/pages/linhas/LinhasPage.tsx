@@ -43,6 +43,11 @@ export default function LinhasPage() {
     await carregar()
   }
 
+  const handleAtivar = async (id: number) => {
+  await api.put(`/linhas/${id}`)
+  await carregar()
+  }
+
   if (carregando) {
     return (
       <div className="flex items-center justify-center h-full">
@@ -103,15 +108,22 @@ export default function LinhasPage() {
                     </span>
                   </td>
                   <td className="px-6 py-4">
-                    {linha.ativa && (
+                    {linha.ativa ? (
                       <button
                         onClick={() => handleDesativar(linha.id)}
                         className="text-xs px-2 py-1 bg-red-800 hover:bg-red-700 text-white rounded transition-colors"
                       >
                         Desativar
                       </button>
+                    ) : (
+                      <button
+                        onClick={() => handleAtivar(linha.id)}
+                        className="text-xs px-2 py-1 bg-green-800 hover:bg-green-700 text-white rounded transition-colors"
+                      >
+                        Ativar
+                      </button>
                     )}
-                  </td>
+                </td>
                 </tr>
               ))
             )}
