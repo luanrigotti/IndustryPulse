@@ -155,6 +155,7 @@ export default function DashboardPage() {
                   borderRadius: '8px',
                   color: '#fff'
                 }}
+                labelFormatter={(v) => new Date(v).toLocaleDateString('pt-BR')}
               />
               <Bar dataKey="quantidadeProduzida" fill="#3b82f6" name="Produzido" />
               <Bar dataKey="quantidadePlanejada" fill="#6b7280" name="Planejado" />
